@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Button, Form, FormGroup, Col, ControlLabel, FormControl } from 'react-bootstrap';
+import { 
+  Button, ButtonToolbar, 
+  Form, FormGroup, Col, ControlLabel, FormControl 
+} from 'react-bootstrap';
 
 const queryString = require('query-string');
 
@@ -86,10 +89,18 @@ class Piece extends Component {
             </tbody>
             </table>
             <FormGroup>
-              <Col smOffset={5} sm={10}>
-                <Button type="submit">
-                  Upload
-                </Button>
+              <Col sm={10} smOffset={5}>
+                <ButtonToolbar>
+                  <Button type="submit" bsStyle="success">
+                    Upload
+                  </Button>
+                  <Button 
+                    type="submit" 
+                    bsStyle="danger" 
+                    onClick={ x => this.setState({newPerf: false}) } >
+                    Cancel
+                  </Button>
+                </ButtonToolbar>
               </Col>
             </FormGroup>
           </Form>

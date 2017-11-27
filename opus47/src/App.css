@@ -45,6 +45,12 @@ body {
   margin-bottom: 10px;
   cursor: pointer;
 }
+.frmnew {
+  color: #5bc0de;
+  font-size: 1.2em;
+  margin-left: 10px;
+  cursor: pointer;
+}
 .plus-perf-disabled {
   color: #ccc;
   font-size: 1.4em;
@@ -137,6 +143,12 @@ body {
 
 .frmtable {
   width: 100%;
+  margin: auto;
+}
+
+.new-piece-div {
+  width: 70%;
+  margin: 20px;
 }
 
 
