@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import { Button, Form, FormGroup, Col, ControlLabel, FormControl } from 'react-bootstrap';
 
 const queryString = require('query-string');
 
@@ -10,9 +11,115 @@ class Piece extends Component {
     var qs = queryString.parse(window.location.search);
     this.state = {
       ready: false,
-      id: qs.id
+      id: qs.id,
+      newPerf: false
     }
     this.fetchData()
+  }
+
+  newPerformance() {
+
+    console.log("new performance");
+    this.setState({
+      newPerf: true
+    });
+
+  }
+
+  renderNewPerformance() {
+    if (this.state.newPerf === true) {
+      return(
+        <div className="newPerf">
+          <Form horizontal>
+            <FormGroup controlId="venue">
+              <Col componentClass={ControlLabel} sm={2}>
+                Performance
+              </Col>
+              <Col sm={10}>
+                <FormControl type="text" placeholder="Venue" />
+              </Col>
+            </FormGroup>
+            <table className='frmtable'>
+            <tbody>
+            <tr>
+            <td>
+              {
+                this.state.info.parts.map(x => {
+                  return (
+                    <FormGroup key={x.id}>
+                      <Col componentClass={ControlLabel} sm={4}>
+                        {x.name}
+                      </Col>
+                      <Col sm={6}>
+                        <FormControl type="text" placeholder="Musician" />
+                      </Col>
+                    </FormGroup>
+                  );
+                })
+              }
+            </td>
+            <td>
+              {
+                this.state.info.movements.map(x => {
+                  return (
+                    <FormGroup key={x.id}>
+                      <Col componentClass={ControlLabel} sm={7}>
+                        {x.title}
+                      </Col>
+                      <Col sm={3}>
+                        <FormControl componentClass="select" placeholder="Track">
+                          <option value="1">Track 1</option>
+                          <option value="2">Track 2</option>
+                          <option value="3">Track 3</option>
+                          <option value="4">Track 4</option>
+                          <option value="5">Track 5</option>
+                          <option value="6">Track 6</option>
+                          <option value="7">Track 7</option>
+                        </FormControl>
+                      </Col>
+                    </FormGroup>
+                  );
+                })
+              }
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            <FormGroup>
+              <Col smOffset={5} sm={10}>
+                <Button type="submit">
+                  Upload
+                </Button>
+              </Col>
+            </FormGroup>
+          </Form>
+        </div>
+      );
+    }
+    else {
+      return <div className="no-new" />;
+    }
+  }
+
+  renderNewButton() {
+    if (this.state.newPerf === false) {
+      return (
+        <span 
+          className="glyphicon glyphicon-plus plus-perf"
+          onClick={(x) => this.newPerformance(x)}
+        >
+        </span>
+      );
+    }
+    else {
+      return (
+        <span 
+          className="glyphicon glyphicon-plus plus-perf-disabled"
+        >
+        </span>
+      );
+    }
+
   }
 
   render() {
@@ -33,7 +140,19 @@ class Piece extends Component {
             </div>
           </header>
           <div className="PerformanceList">
-            <h2>Performances</h2>
+            <table>
+            <tbody>
+            <tr>
+              <td><h2>Performances</h2></td>
+              <td>
+                { this.renderNewButton() }
+              </td>
+            </tr>
+            </tbody>
+            </table>
+            {
+              this.renderNewPerformance()
+            }
             {
               this.state.performances.map(x => {
                 console.log(x);
@@ -107,16 +226,6 @@ class Piece extends Component {
         
 
   }
-}
-
-class Performance extends Component {
-
-  render() {
-    return (
-      <div></div>
-    );
-  }
-
 }
 
 export default Piece;
