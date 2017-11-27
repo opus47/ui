@@ -1,0 +1,199 @@
+body {
+  font-family: 'Open Sans', sans-serif !important;
+}
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+
+.PieceHeader {
+  border: #2179bf 1px solid;
+  background-color: #474747;
+  min-height: 50px;
+  color: white;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.Search {
+  min-width: 500px;
+}
+
+.opusbtn {
+  color: #5bc0de;
+}
+
+.SearchResult {
+  margin: 10px;
+}
+
+.SearchResult {
+  font-size: 1.2em;
+}
+
+.SearchResult  .Composer {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.SearchResult .Catalog {
+  font-style: italic;
+  font-size: 1.0em;
+}
+
+.SearchResult .Title {
+  font-size: 1.2em;
+}
+
+.Piece {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.Piece > .Composer {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.Piece > .Catalog {
+  font-style: italic;
+  font-size: 1.2em;
+}
+
+.Piece > .Title {
+  font-size: 1.2em;
+}
+
+.SearchResults {
+  margin: 20px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.PerformanceList {
+  padding: 20px;
+}
+
+.performer-list {
+  margin: 20px;
+}
+
+.performer-list-item {
+  margin: 5px;
+}
+
+.recording-list {
+  margin: 20px;
+}
+.recording-list-item {
+  margin: 5px;
+}
+
+.p-musician {
+  font-size: 1.2em;
+}
+.p-part {
+  font-style: italic;
+}
+
+
+/*
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
+.navbar-default {
+  background-color: #474747;
+  border-color: #2179bf;
+  border-radius: 0;
+}
+.navbar-default .navbar-brand {
+  color: #f5f5f5;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #bed0ee;
+}
+.navbar-default .navbar-text {
+  color: #f5f5f5;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #f5f5f5;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #bed0ee;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #bed0ee;
+  background-color: #2179bf;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #bed0ee;
+  background-color: #2179bf;
+}
+.navbar-default .navbar-toggle {
+  border-color: #2179bf;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #2179bf;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #f5f5f5;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #f5f5f5;
+}
+.navbar-default .navbar-link {
+  color: #f5f5f5;
+}
+.navbar-default .navbar-link:hover {
+  color: #bed0ee;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #f5f5f5;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #bed0ee;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #bed0ee;
+    background-color: #2179bf;
+  }
+}
+
+
