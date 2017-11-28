@@ -40,8 +40,23 @@ class Search extends Component {
         {v: 20, k: "Oboe"},
         {v: 21, k: "Horn"},
         {v: 22, k: "Bass"}
-      ]
+      ],
+      
+      newPieceComposer: "",
+      newPieceTitle: "",
+      newPieceKey: ""
+      
     };
+  }
+
+  newPieceComposerChange(event) {
+    this.setState({newPieceComposer: event.target.value});
+  }
+  newPieceTitleChange(event) {
+    this.setState({newPieceTitle: event.target.value});
+  }
+  newPieceKeyChange(event) {
+    this.setState({newPieceKey: event.target.value});
   }
 
   appendNewPart() {
@@ -78,18 +93,33 @@ class Search extends Component {
     });
   }
 
+  doUpload(e) {
+
+    e.preventDefault();
+
+    console.log(this.state);
+
+    console.log(e);
+
+  }
+
   renderNewPiece() {
 
     if (this.state.newPiece === true) {
       return (
         <div className="new-piece-div">
-          <Form horizontal>
+          <Form horizontal onSubmit={e => this.doUpload(e)}>
             <FormGroup controlId="composer">
               <Col componentClass={ControlLabel} sm={1}>
                 Composer
               </Col>
               <Col sm={9}>
-                <FormControl type="text" placeholder="Name" />
+                <FormControl 
+                  type="text" 
+                  placeholder="Name" 
+                  value={this.state.newPieceComposer} 
+                  onChange={e => this.newPieceComposerChange(e)}
+                />
               </Col>
             </FormGroup>
             <FormGroup controlId="title">
@@ -97,7 +127,12 @@ class Search extends Component {
                 Title
               </Col>
               <Col sm={9}>
-                <FormControl type="text" placeholder="Arrangement" />
+                <FormControl 
+                  type="text" 
+                  placeholder="Arrangement" 
+                  value={this.state.newPieceTitle} 
+                  onChange={e => this.newPieceTitleChange(e)}
+                />
               </Col>
             </FormGroup>
             <FormGroup controlId="key">
@@ -105,7 +140,12 @@ class Search extends Component {
                 Key
               </Col>
               <Col sm={9}>
-                <FormControl type="text" placeholder="Key" />
+                <FormControl 
+                  type="text" 
+                  placeholder="Key" 
+                  value={this.state.newPieceKey} 
+                  onChange={e => this.newPieceKeyChange(e)}
+                />
               </Col>
             </FormGroup>
             <table className="frmtable">
@@ -174,11 +214,13 @@ class Search extends Component {
             <FormGroup>
               <Col sm={10} smOffset={5}>
                 <ButtonToolbar>
-                  <Button type="submit" bsStyle="success">
+                  <Button 
+                    type="submit" 
+                    bsStyle="success" >
                     Upload
                   </Button>
                   <Button 
-                    type="submit" 
+                    type="reset" 
                     bsStyle="danger" 
                     onClick={ x => this.setState({newPiece: false}) } >
                     Cancel
