@@ -44,7 +44,9 @@ class Search extends Component {
       
       newPieceComposer: "",
       newPieceTitle: "",
-      newPieceKey: ""
+      newPieceKey: "",
+      newPieceNumber: "0",
+      newPieceCatalog: "",
       
     };
   }
@@ -57,6 +59,12 @@ class Search extends Component {
   }
   newPieceKeyChange(event) {
     this.setState({newPieceKey: event.target.value});
+  }
+  newPieceNumberChange(event) {
+    this.setState({newPieceNumber: event.target.value});
+  }
+  newPieceCatalogChange(event) {
+    this.setState({newPieceCatalog: event.target.value});
   }
   newPartChange(event, i) {
     var parts = this.state.newParts.slice();
@@ -113,6 +121,21 @@ class Search extends Component {
 
     console.log(this.state);
 
+    var cname = this.state.newPieceComposer.split(/\s+/);
+
+    var data = {
+      cfirst: cname[0],
+      clast: cname[1],
+      title: this.state.newPieceTitle,
+      key: this.state.newPieceKey,
+      catalog: this.state.newPieceCatalog,
+      number: this.state.newPieceNumber,
+      movements: this.state.newMovements.map((x, i) => ({title: x, number: i})),
+      parts: this.state.newParts.map(x => ({name: x}))
+    }
+
+    console.log(data);
+
     console.log(e);
 
   }
@@ -159,6 +182,32 @@ class Search extends Component {
                   placeholder="Key" 
                   value={this.state.newPieceKey} 
                   onChange={e => this.newPieceKeyChange(e)}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup controlId="number">
+              <Col componentClass={ControlLabel} sm={1}>
+                Number
+              </Col>
+              <Col sm={9}>
+                <FormControl 
+                  type="text" 
+                  placeholder="Number" 
+                  value={this.state.newPieceNumber} 
+                  onChange={e => this.newPieceNumberChange(e)}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup controlId="catalog">
+              <Col componentClass={ControlLabel} sm={1}>
+                Catalog
+              </Col>
+              <Col sm={9}>
+                <FormControl 
+                  type="text" 
+                  placeholder="Catalog" 
+                  value={this.state.newPieceCatalog} 
+                  onChange={e => this.newPieceCatalogChange(e)}
                 />
               </Col>
             </FormGroup>
