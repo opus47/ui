@@ -58,6 +58,20 @@ class Search extends Component {
   newPieceKeyChange(event) {
     this.setState({newPieceKey: event.target.value});
   }
+  newPartChange(event, i) {
+    var parts = this.state.newParts.slice();
+    parts[i] = event.target.value;
+    this.setState({
+      newParts: parts
+    });
+  }
+  newMovementChange(event, i) {
+    var parts = this.state.newMovements.slice();
+    parts[i] = event.target.value;
+    this.setState({
+      newMovements: parts
+    });
+  }
 
   appendNewPart() {
 
@@ -153,13 +167,18 @@ class Search extends Component {
                 <tr>
                   <td>
                     {
-                      this.state.newParts.map(x => {
+                      this.state.newParts.map((x,i) => {
                         return (
-                          <FormGroup>
+                          <FormGroup key={x.k+i.toString()}>
                             <Col sm={10}>
-                              <FormControl componentClass="select" placeholder="Violin">
+                              <FormControl 
+                                componentClass="select" 
+                                placeholder="Violin"
+                                value={this.state.newParts[i]}
+                                onChange={e => this.newPartChange(e, i)}
+                              >
                                 {this.state.partList.map(
-                                  x => <option key={x.v} value={x.v}> {x.k} </option> )}
+                                  x => <option key={x.v} value={x.k}> {x.k} </option> )}
                               </FormControl>
                             </Col>
                           </FormGroup>
@@ -183,11 +202,16 @@ class Search extends Component {
                   </td>
                   <td>
                     {
-                      this.state.newMovements.map(x => {
+                      this.state.newMovements.map((x, i) => {
                         return (
-                          <FormGroup>
+                          <FormGroup key={x.k+i.toString()}>
                             <Col sm={9}>
-                              <FormControl type="text" placeholder="Movement" />
+                              <FormControl 
+                                type="text" 
+                                placeholder="Movement" 
+                                value={this.state.newMovements[i]}
+                                onChange={e => this.newMovementChange(e, i)}
+                              />
                             </Col>
                           </FormGroup>
                         );
@@ -291,6 +315,11 @@ class SearchBar extends React.Component {
           value: qs.search
         }
       });
+    }
+    else {
+      this.state = {
+        query: ""
+      }
     }
   }
 
