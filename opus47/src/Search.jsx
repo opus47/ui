@@ -45,7 +45,7 @@ class Search extends Component {
       newPieceComposer: "",
       newPieceTitle: "",
       newPieceKey: "",
-      newPieceNumber: "0",
+      newPieceNumber: 0,
       newPieceCatalog: "",
       
     };
@@ -61,7 +61,7 @@ class Search extends Component {
     this.setState({newPieceKey: event.target.value});
   }
   newPieceNumberChange(event) {
-    this.setState({newPieceNumber: event.target.value});
+    this.setState({newPieceNumber: parseInt(event.target.value)});
   }
   newPieceCatalogChange(event) {
     this.setState({newPieceCatalog: event.target.value});
@@ -124,19 +124,32 @@ class Search extends Component {
     var cname = this.state.newPieceComposer.split(/\s+/);
 
     var data = {
-      cfirst: cname[0],
-      clast: cname[1],
-      title: this.state.newPieceTitle,
-      key: this.state.newPieceKey,
-      catalog: this.state.newPieceCatalog,
-      number: this.state.newPieceNumber,
-      movements: this.state.newMovements.map((x, i) => ({title: x, number: i})),
-      parts: this.state.newParts.map(x => ({name: x}))
+      data: {
+        cfirst: cname[0],
+        clast: cname[1],
+        Title: this.state.newPieceTitle,
+        key: this.state.newPieceKey,
+        catalog: this.state.newPieceCatalog,
+        number: this.state.newPieceNumber,
+        movements: this.state.newMovements.map((x, i) => ({title: x, number: i})),
+        parts: this.state.newParts.map(x => ({name: x}))
+      }
     }
 
     console.log(data);
 
     console.log(e);
+
+    //var form_data = new FormData();
+    //form_data.append("json", JSON.stringify(data));
+
+    fetch('https://opus47.io/pieces', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
 
   }
 
@@ -192,7 +205,7 @@ class Search extends Component {
               <Col sm={9}>
                 <FormControl 
                   type="text" 
-                  placeholder="Number" 
+                  placeholder={0}
                   value={this.state.newPieceNumber} 
                   onChange={e => this.newPieceNumberChange(e)}
                 />
@@ -363,7 +376,7 @@ class SearchBar extends React.Component {
         target: {
           value: qs.search
         }
-      });
+      }, false);
     }
     else {
       this.state = {
@@ -388,10 +401,12 @@ class SearchBar extends React.Component {
     );
   }
 
-  handleChange(e) {
-    this.setState({
-      query: e.target.value
-    })
+  handleChange(e, set_state = true) {
+    if(set_state) {
+      this.setState({
+        query: e.target.value
+      })
+    }
     console.log(e.target.value);
     //this.props.reportSearchResults(['a','b','c']);
     var etext = encodeURI(e.target.value);
