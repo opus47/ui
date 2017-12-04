@@ -65,7 +65,7 @@ class Piece extends Component {
               {
                 this.state.info.movements.map(x => {
                   return (
-                    <FormGroup key={x.id} classNmae="pform">
+                    <FormGroup key={x.id} className="pform">
                       <Col componentClass={ControlLabel} sm={6}>
                         {x.title}
                       </Col>
