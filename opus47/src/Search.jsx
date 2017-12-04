@@ -41,11 +41,42 @@ class Search extends Component {
         {v: 21, k: "Horn"},
         {v: 22, k: "Bass"}
       ],
+      keyList: [
+        'C Major',
+        'G Major',
+        'D Major',
+        'A Major',
+        'E Major',
+        'B Major',
+        'F Sharp Major',
+        'C Sharp Major',
+        'A Minor',
+        'E Minor',
+        'B Minor',
+        'F Sharp Minor',
+        'C Sharp Minor',
+        'G Sharp Minor',
+        'D Sharp Minor',
+        'F Major',
+        'B Flat Major',
+        'E Flat Major',
+        'A Flat Major',
+        'D Flat Major',
+        'G Flat Major',
+        'C Flat Major',
+        'D Minor',
+        'G Minor',
+        'C Minor',
+        'F Minor',
+        'B Flat Minor',
+        'E Flat Minor',
+        'A Flat minor'
+      ],
       
       newPieceComposer: "",
       newPieceTitle: "",
       newPieceKey: "",
-      newPieceNumber: 0,
+      newPieceNumber: "",
       newPieceCatalog: "",
       
     };
@@ -61,7 +92,7 @@ class Search extends Component {
     this.setState({newPieceKey: event.target.value});
   }
   newPieceNumberChange(event) {
-    this.setState({newPieceNumber: parseInt(event.target.value)});
+    this.setState({newPieceNumber: event.target.value});
   }
   newPieceCatalogChange(event) {
     this.setState({newPieceCatalog: event.target.value});
@@ -123,17 +154,29 @@ class Search extends Component {
 
     var cname = this.state.newPieceComposer.split(/\s+/);
 
+    var c = {};
+    if (cname.length > 2) {
+      c = {
+        first: cname[0],
+        middle: cname[1],
+        last: cname[2]
+      };
+    }
+    else {
+      c = {
+        first: cname[0],
+        last: cname[1]
+      };
+    }
+
     var data = {
-      data: {
-        cfirst: cname[0],
-        clast: cname[1],
-        Title: this.state.newPieceTitle,
-        key: this.state.newPieceKey,
-        catalog: this.state.newPieceCatalog,
-        number: this.state.newPieceNumber,
-        movements: this.state.newMovements.map((x, i) => ({title: x, number: i})),
-        parts: this.state.newParts.map(x => ({name: x}))
-      }
+      composer: c,
+      title: this.state.newPieceTitle,
+      key: { name: this.state.newPieceKey },
+      catalog: this.state.newPieceCatalog,
+      number: parseInt(this.state.newPieceNumber, 10),
+      movements: this.state.newMovements.map((x, i) => ({title: x, number: i})),
+      parts: this.state.newParts.map(x => ({name: x}))
     }
 
     console.log(data);
@@ -149,7 +192,9 @@ class Search extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
-    });
+    })
+      .then( x => x.json() )
+      .then( x => console.log(x) )
 
   }
 
@@ -160,7 +205,7 @@ class Search extends Component {
         <div className="new-piece-div">
           <Form horizontal onSubmit={e => this.doUpload(e)}>
             <FormGroup controlId="composer">
-              <Col componentClass={ControlLabel} sm={1}>
+              <Col componentClass={ControlLabel} sm={2}>
                 Composer
               </Col>
               <Col sm={9}>
@@ -173,7 +218,7 @@ class Search extends Component {
               </Col>
             </FormGroup>
             <FormGroup controlId="title">
-              <Col componentClass={ControlLabel} sm={1}>
+              <Col componentClass={ControlLabel} sm={2}>
                 Title
               </Col>
               <Col sm={9}>
@@ -186,20 +231,24 @@ class Search extends Component {
               </Col>
             </FormGroup>
             <FormGroup controlId="key">
-              <Col componentClass={ControlLabel} sm={1}>
+              <Col componentClass={ControlLabel} sm={2}>
                 Key
               </Col>
               <Col sm={9}>
                 <FormControl 
-                  type="text" 
-                  placeholder="Key" 
+                  componentClass="select"
+                  placeholder="C Major" 
                   value={this.state.newPieceKey} 
                   onChange={e => this.newPieceKeyChange(e)}
-                />
+                >
+                {this.state.keyList.map(
+                  x => <option key={x} value={x}> {x} </option> 
+                )}
+                </FormControl>
               </Col>
             </FormGroup>
             <FormGroup controlId="number">
-              <Col componentClass={ControlLabel} sm={1}>
+              <Col componentClass={ControlLabel} sm={2}>
                 Number
               </Col>
               <Col sm={9}>
@@ -212,7 +261,7 @@ class Search extends Component {
               </Col>
             </FormGroup>
             <FormGroup controlId="catalog">
-              <Col componentClass={ControlLabel} sm={1}>
+              <Col componentClass={ControlLabel} sm={2}>
                 Catalog
               </Col>
               <Col sm={9}>
@@ -449,8 +498,8 @@ class SearchResult extends Component {
                 search: '?id='+result.id,
                 }}
               >
-                <span className="Composer">{result.clast}:</span>&nbsp;
-                <span className="Title">{result.title} in {result.key}</span> ~&nbsp;
+                <span className="Composer">{result.composer.last}:</span>&nbsp;
+                <span className="Title">{result.title} in {result.key.name}</span> ~&nbsp;
                 <span className="Catalog">{result.catalog}</span>
               </Link>
             </div>

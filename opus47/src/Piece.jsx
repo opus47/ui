@@ -34,7 +34,7 @@ class Piece extends Component {
       return(
         <div className="newPerf">
           <Form horizontal>
-            <FormGroup controlId="venue">
+            <FormGroup controlId="venue" className="pform">
               <Col componentClass={ControlLabel} sm={2}>
                 Performance
               </Col>
@@ -49,8 +49,8 @@ class Piece extends Component {
               {
                 this.state.info.parts.map(x => {
                   return (
-                    <FormGroup key={x.id}>
-                      <Col componentClass={ControlLabel} sm={4}>
+                    <FormGroup key={x.id} className="pform">
+                      <Col componentClass={ControlLabel} sm={3}>
                         {x.name}
                       </Col>
                       <Col sm={6}>
@@ -65,11 +65,11 @@ class Piece extends Component {
               {
                 this.state.info.movements.map(x => {
                   return (
-                    <FormGroup key={x.id}>
-                      <Col componentClass={ControlLabel} sm={7}>
+                    <FormGroup key={x.id} classNmae="pform">
+                      <Col componentClass={ControlLabel} sm={6}>
                         {x.title}
                       </Col>
-                      <Col sm={3}>
+                      <Col sm={4}>
                         <FormControl componentClass="select" placeholder="Track">
                           <option value="1">Track 1</option>
                           <option value="2">Track 2</option>
@@ -140,10 +140,10 @@ class Piece extends Component {
           <header className="PieceHeader">
             <div className="Piece">
               <span className="Composer"> 
-                {this.state.info.cfirst} {this.state.info.clast}:&nbsp;
+                {this.state.info.composer.first} {this.state.info.composer.last}:&nbsp;
               </span>
               <span className="Title">
-                {this.state.info.title} in {this.state.info.key}&nbsp;
+                {this.state.info.title} in {this.state.info.key.name}&nbsp;
               </span>
               <span className="Catalog">
                 ~ {this.state.info.catalog}
