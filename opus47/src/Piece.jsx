@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import PieceEditor from './PieceEditor.jsx';
 import { 
   Button, ButtonToolbar, 
   Form, FormGroup, Col, ControlLabel, FormControl 
@@ -134,6 +135,19 @@ class Piece extends Component {
 
   }
 
+  onEditPieceClose() {
+    this.setState({editPiece: false});
+  }
+
+  renderEditPiece() {
+    if (this.state.editPiece === true) {
+      return <PieceEditor handleClose={() => this.onEditPieceClose()}></PieceEditor>;
+    }
+    else {
+      return <div className="no-new-piece" />;
+    }
+  }
+
   render() {
     if (this.state.ready === true) {
       return ( 
@@ -151,11 +165,12 @@ class Piece extends Component {
               </span>
               <span 
                 className="glyphicon glyphicon-pencil opusbtn editbtn"
-                onClick={ x => this.setState({newPiece: true}) }
+                onClick={ x => this.setState({editPiece: true}) }
               >
               </span>
             </div>
           </header>
+          { this.renderEditPiece() }
           <div className="PerformanceList">
             <table>
             <tbody>

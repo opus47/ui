@@ -43,6 +43,7 @@ body {
 
 .editbtn {
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .plus-perf {
