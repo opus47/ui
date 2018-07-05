@@ -15,7 +15,8 @@ class Piece extends Component {
     this.state = {
       ready: false,
       id: qs.id,
-      newPerf: false
+      newPerf: false,
+      editPiece: false
     }
     this.fetchData()
   }
@@ -147,6 +148,11 @@ class Piece extends Component {
               </span>
               <span className="Catalog">
                 ~ {this.state.info.catalog}
+              </span>
+              <span 
+                className="glyphicon glyphicon-pencil opusbtn editbtn"
+                onClick={ x => this.setState({newPiece: true}) }
+              >
               </span>
             </div>
           </header>

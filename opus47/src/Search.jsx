@@ -9,14 +9,12 @@ import {
 
 const queryString = require('query-string');
 
-class Search extends Component {
+class PieceEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      results: [],
-      newPiece: false,
-      newMovements: [""],
-      newParts: ["Violin"],
+      movements: [""],
+      parts: ["Violin"],
       partList: [
         {v: 1, k: "Violin"},
         {v: 2, k: "Violin 1"},
@@ -73,76 +71,73 @@ class Search extends Component {
         'A Flat minor'
       ],
       
-      newPieceComposer: "",
-      newPieceTitle: "",
-      newPieceKey: "",
-      newPieceNumber: "",
-      newPieceCatalog: "",
-      
-    };
+      composer: "",
+      title: "",
+      key: "",
+      number: "",
+      catalog: "",
+
+      handleClose: {},
+    }
   }
 
-  newPieceComposerChange(event) {
-    this.setState({newPieceComposer: event.target.value});
+  composerChange(event) {
+    this.setState({composer: event.target.value});
   }
-  newPieceTitleChange(event) {
-    this.setState({newPieceTitle: event.target.value});
+  titleChange(event) {
+    this.setState({title: event.target.value});
   }
-  newPieceKeyChange(event) {
-    this.setState({newPieceKey: event.target.value});
+  keyChange(event) {
+    this.setState({key: event.target.value});
   }
-  newPieceNumberChange(event) {
-    this.setState({newPieceNumber: event.target.value});
+  numberChange(event) {
+    this.setState({number: event.target.value});
   }
-  newPieceCatalogChange(event) {
-    this.setState({newPieceCatalog: event.target.value});
+  catalogChange(event) {
+    this.setState({catalog: event.target.value});
   }
-  newPartChange(event, i) {
-    var parts = this.state.newParts.slice();
+  partChange(event, i) {
+    var parts = this.state.parts.slice();
     parts[i] = event.target.value;
     this.setState({
-      newParts: parts
+      parts: parts
     });
   }
-  newMovementChange(event, i) {
-    var parts = this.state.newMovements.slice();
-    parts[i] = event.target.value;
+  movementChange(event, i) {
+    var movements = this.state.movements.slice();
+    movements[i] = event.target.value;
     this.setState({
-      newMovements: parts
+      movements: movements
     });
   }
 
-  appendNewPart() {
-
+  appendPart() {
     this.setState({
-      newParts: this.state.newParts.concat([""])
+      parts: this.state.parts.concat([""])
     });
-
   }
 
-  removeNewPart() {
-    if (this.state.newParts.length <= 1) {
+  removePart() {
+    if (this.state.parts.length <= 1) {
       return;
     }
     this.setState({
-      newParts: this.state.newParts.slice(0, this.state.newParts.length-1)
+      parts: this.state.parts.slice(0, this.state.parts.length-1)
     });
   }
 
-  appendNewMovement() {
-
+  appendMovement() {
     this.setState({
-      newMovements: this.state.newMovements.concat([""])
+      movements: this.state.movements.concat([""])
     });
-
   }
 
-  removeNewMovement() {
-    if (this.state.newMovements.length <= 1) {
+  removeMovement() {
+    if (this.state.movements.length <= 1) {
       return;
     }
     this.setState({
-      newMovements: this.state.newMovements.slice(0, this.state.newMovements.length-1)
+      movements: this.state.movements.slice(0, this.state.movements.length-1)
     });
   }
 
@@ -152,7 +147,7 @@ class Search extends Component {
 
     console.log(this.state);
 
-    var cname = this.state.newPieceComposer.split(/\s+/);
+    var cname = this.state.composer.split(/\s+/);
 
     var c = {};
     if (cname.length > 2) {
@@ -171,12 +166,12 @@ class Search extends Component {
 
     var data = {
       composer: c,
-      title: this.state.newPieceTitle,
-      key: { name: this.state.newPieceKey },
-      catalog: this.state.newPieceCatalog,
-      number: parseInt(this.state.newPieceNumber, 10),
-      movements: this.state.newMovements.map((x, i) => ({title: x, number: i})),
-      parts: this.state.newParts.map(x => ({name: x}))
+      title: this.state.title,
+      key: { name: this.state.key },
+      catalog: this.state.catalog,
+      number: parseInt(this.state.number, 10),
+      movements: this.state.movements.map((x, i) => ({title: x, number: i})),
+      parts: this.state.parts.map(x => ({name: x}))
     }
 
     console.log(data);
@@ -197,10 +192,13 @@ class Search extends Component {
       .then( x => console.log(x) )
 
   }
+beeth
+  onClose() {
+    this.props.handleClose();
+  }
 
-  renderNewPiece() {
+  render() {
 
-    if (this.state.newPiece === true) {
       return (
         <div className="new-piece-div">
           <Form horizontal onSubmit={e => this.doUpload(e)}>
@@ -212,8 +210,8 @@ class Search extends Component {
                 <FormControl 
                   type="text" 
                   placeholder="Name" 
-                  value={this.state.newPieceComposer} 
-                  onChange={e => this.newPieceComposerChange(e)}
+                  value={this.state.composer} 
+                  onChange={e => this.composerChange(e)}
                 />
               </Col>
             </FormGroup>
@@ -225,8 +223,8 @@ class Search extends Component {
                 <FormControl 
                   type="text" 
                   placeholder="Arrangement" 
-                  value={this.state.newPieceTitle} 
-                  onChange={e => this.newPieceTitleChange(e)}
+                  value={this.state.title} 
+                  onChange={e => this.titleChange(e)}
                 />
               </Col>
             </FormGroup>
@@ -238,8 +236,8 @@ class Search extends Component {
                 <FormControl 
                   componentClass="select"
                   placeholder="C Major" 
-                  value={this.state.newPieceKey} 
-                  onChange={e => this.newPieceKeyChange(e)}
+                  value={this.state.key} 
+                  onChange={e => this.keyChange(e)}
                 >
                 {this.state.keyList.map(
                   x => <option key={x} value={x}> {x} </option> 
@@ -255,8 +253,8 @@ class Search extends Component {
                 <FormControl 
                   type="text" 
                   placeholder={0}
-                  value={this.state.newPieceNumber} 
-                  onChange={e => this.newPieceNumberChange(e)}
+                  value={this.state.number} 
+                  onChange={e => this.numberChange(e)}
                 />
               </Col>
             </FormGroup>
@@ -268,8 +266,8 @@ class Search extends Component {
                 <FormControl 
                   type="text" 
                   placeholder="Catalog" 
-                  value={this.state.newPieceCatalog} 
-                  onChange={e => this.newPieceCatalogChange(e)}
+                  value={this.state.catalog} 
+                  onChange={e => this.catalogChange(e)}
                 />
               </Col>
             </FormGroup>
@@ -278,15 +276,15 @@ class Search extends Component {
                 <tr>
                   <td>
                     {
-                      this.state.newParts.map((x,i) => {
+                      this.state.parts.map((x,i) => {
                         return (
                           <FormGroup key={x.k+i.toString()}>
                             <Col sm={10}>
                               <FormControl 
                                 componentClass="select" 
                                 placeholder="Violin"
-                                value={this.state.newParts[i]}
-                                onChange={e => this.newPartChange(e, i)}
+                                value={this.state.parts[i]}
+                                onChange={e => this.partChange(e, i)}
                               >
                                 {this.state.partList.map(
                                   x => <option key={x.v} value={x.k}> {x.k} </option> )}
@@ -301,11 +299,11 @@ class Search extends Component {
                         <ButtonToolbar>
                           <span 
                             className="glyphicon glyphicon-plus frmnew" 
-                            onClick={x => this.appendNewPart()}
+                            onClick={x => this.appendPart()}
                           > </span>
                           <span 
                             className="glyphicon glyphicon-minus frmnew" 
-                            onClick={x => this.removeNewPart()}
+                            onClick={x => this.removePart()}
                           > </span>
                         </ButtonToolbar>
                       </Col>
@@ -313,15 +311,15 @@ class Search extends Component {
                   </td>
                   <td>
                     {
-                      this.state.newMovements.map((x, i) => {
+                      this.state.movements.map((x, i) => {
                         return (
                           <FormGroup key={x.k+i.toString()}>
                             <Col sm={9}>
                               <FormControl 
                                 type="text" 
                                 placeholder="Movement" 
-                                value={this.state.newMovements[i]}
-                                onChange={e => this.newMovementChange(e, i)}
+                                value={this.state.movements[i]}
+                                onChange={e => this.movementChange(e, i)}
                               />
                             </Col>
                           </FormGroup>
@@ -333,11 +331,11 @@ class Search extends Component {
                         <ButtonToolbar>
                           <span 
                             className="glyphicon glyphicon-plus frmnew" 
-                            onClick={x => this.appendNewMovement()}
+                            onClick={x => this.appendMovement()}
                           > </span>
                           <span 
                             className="glyphicon glyphicon-minus frmnew" 
-                            onClick={x => this.removeNewMovement()}
+                            onClick={x => this.removeMovement()}
                           > </span>
                         </ButtonToolbar>
                       </Col>
@@ -357,7 +355,7 @@ class Search extends Component {
                   <Button 
                     type="reset" 
                     bsStyle="danger" 
-                    onClick={ x => this.setState({newPiece: false}) } >
+                    onClick={ x => this.onClose() } >
                     Cancel
                   </Button>
                 </ButtonToolbar>
@@ -366,12 +364,32 @@ class Search extends Component {
           </Form>
         </div>
       );
+
+  }
+}
+
+class Search extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      results: [],
+      newPiece: false,
+    };
+  }
+
+  onNewPieceClose() {
+    this.setState({newPiece: false});
+  }
+
+  renderNewPiece() {
+    if (this.state.newPiece === true) {
+      return <PieceEditor handleClose={() => this.onNewPieceClose()}></PieceEditor>;
     }
     else {
       return <div className="no-new-piece" />;
     }
-
   }
+
 
   render() {
     return (

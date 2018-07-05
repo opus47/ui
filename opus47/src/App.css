@@ -41,6 +41,10 @@ body {
   color: #5bc0de;
 }
 
+.editbtn {
+  margin-left: 10px;
+}
+
 .plus-perf {
   color: #5bc0de;
   font-size: 1.4em;
@@ -153,7 +157,9 @@ body {
 
 .new-piece-div {
   min-width: 700px;
-  margin: 20px;
+  margin: 0px;
+  padding: 20px;
+  background-color: #eee;
 }
 
 .pform {
@@ -175,6 +181,7 @@ body {
   background-color: #474747;
   border-color: #2179bf;
   border-radius: 0;
+  margin-bottom: 0px;
 }
 .navbar-default .navbar-brand {
   color: #f5f5f5;
