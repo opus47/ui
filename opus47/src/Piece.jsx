@@ -135,13 +135,26 @@ class Piece extends Component {
 
   }
 
-  onEditPieceClose() {
+  onEditPieceClose(data) {
     this.setState({editPiece: false});
+
+    this.setState({info: data});
   }
 
   renderEditPiece() {
     if (this.state.editPiece === true) {
-      return <PieceEditor handleClose={() => this.onEditPieceClose()}></PieceEditor>;
+      return <PieceEditor 
+          composer={this.state.info.composer.first + ' ' + this.state.info.composer.last}
+          title={this.state.info.title}
+          keyy={this.state.info.key.name}
+          number={this.state.info.number}
+          catalog={this.state.info.catalog}
+          movements={this.state.info.movements}
+          parts={this.state.info.parts}
+          id={this.state.info.id}
+          handleClose={(x) => this.onEditPieceClose(x)}
+        >
+        </PieceEditor>;
     }
     else {
       return <div className="no-new-piece" />;

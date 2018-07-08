@@ -67,14 +67,24 @@ class PieceEditor extends Component {
         'A Flat minor'
       ],
       
-      composer: "",
-      title: "",
-      key: "",
-      number: "",
-      catalog: "",
+      id: props.id || "",
+      composer: props.composer || "",
+      title: props.title || "",
+      key: props.keyy || "C Major",
+      number: props.number || "",
+      catalog: props.catalog || "",
 
       handleClose: {},
     }
+
+    if('movements' in props) {
+      this.state.movements = props.movements.map(x => x.title);
+    }
+
+    if('parts' in props) {
+      this.state.parts = props.parts.map(x => x.name);
+    }
+
   }
 
   composerChange(event) {
@@ -162,11 +172,12 @@ class PieceEditor extends Component {
 
     var data = {
       composer: c,
+      id: this.state.id,
       title: this.state.title,
       key: { name: this.state.key },
       catalog: this.state.catalog,
       number: parseInt(this.state.number, 10),
-      movements: this.state.movements.map((x, i) => ({title: x, number: i})),
+      movements: this.state.movements.map((x, i) => ({title: x, number: i+1})),
       parts: this.state.parts.map(x => ({name: x}))
     }
 
@@ -187,8 +198,10 @@ class PieceEditor extends Component {
       .then( x => x.json() )
       .then( x => console.log(x) )
 
+    this.props.handleClose(data);
+
   }
-beeth
+
   onClose() {
     this.props.handleClose();
   }
@@ -346,7 +359,7 @@ beeth
                   <Button 
                     type="submit" 
                     bsStyle="success" >
-                    Upload
+                    { this.state.id === "" ? "Create" : "Update" }
                   </Button>
                   <Button 
                     type="reset" 
