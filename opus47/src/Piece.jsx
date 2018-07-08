@@ -138,7 +138,9 @@ class Piece extends Component {
   onEditPieceClose(data) {
     this.setState({editPiece: false});
 
-    this.setState({info: data});
+    if(data) {
+      this.setState({info: data});
+    }
   }
 
   renderEditPiece() {
