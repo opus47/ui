@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import PieceEditor from './PieceEditor.jsx';
-import { 
-  Button, ButtonToolbar, 
-  Form, FormGroup, Col, ControlLabel, FormControl 
-} from 'react-bootstrap';
+import PerformanceEditor from './PerformanceEditor.jsx';
 
 const queryString = require('query-string');
 
@@ -17,7 +14,8 @@ class Piece extends Component {
       ready: false,
       id: qs.id,
       newPerf: false,
-      editPiece: false
+      editPiece: false,
+      newPerfData: {}
     }
     this.fetchData()
   }
@@ -31,85 +29,25 @@ class Piece extends Component {
 
   }
 
+  uploadPerformance(e) {
+
+    e.preventDefault();
+    console.log(e);
+
+  }
+
+  performanceEditorClose() {
+    this.setState({newPerf: false});
+  }
+
   renderNewPerformance() {
     if (this.state.newPerf === true) {
-      return(
-        <div className="newPerf">
-          <Form horizontal>
-            <FormGroup controlId="venue" className="pform">
-              <Col componentClass={ControlLabel} sm={2}>
-                Performance
-              </Col>
-              <Col sm={10}>
-                <FormControl type="text" placeholder="Venue" />
-              </Col>
-            </FormGroup>
-            <table className='frmtable'>
-            <tbody>
-            <tr>
-            <td>
-              {
-                this.state.info.parts.map(x => {
-                  return (
-                    <FormGroup key={x.id} className="pform">
-                      <Col componentClass={ControlLabel} sm={3}>
-                        {x.name}
-                      </Col>
-                      <Col sm={6}>
-                        <FormControl type="text" placeholder="Musician" />
-                      </Col>
-                    </FormGroup>
-                  );
-                })
-              }
-            </td>
-            <td>
-              {
-                this.state.info.movements.map(x => {
-                  return (
-                    <FormGroup key={x.id} className="pform">
-                      <Col componentClass={ControlLabel} sm={6}>
-                        {x.title}
-                      </Col>
-                      <Col sm={4}>
-                        <FormControl componentClass="select" placeholder="Track">
-                          <option value="1">Track 1</option>
-                          <option value="2">Track 2</option>
-                          <option value="3">Track 3</option>
-                          <option value="4">Track 4</option>
-                          <option value="5">Track 5</option>
-                          <option value="6">Track 6</option>
-                          <option value="7">Track 7</option>
-                        </FormControl>
-                      </Col>
-                    </FormGroup>
-                  );
-                })
-              }
-            </td>
-            </tr>
-            </tbody>
-            </table>
-            <FormGroup>
-              <Col sm={10} smOffset={5}>
-                <ButtonToolbar>
-                  <Button type="submit" bsStyle="success">
-                    Upload
-                  </Button>
-                  <Button 
-                    type="submit" 
-                    bsStyle="danger" 
-                    onClick={ x => this.setState({newPerf: false}) } >
-                    Cancel
-                  </Button>
-                </ButtonToolbar>
-              </Col>
-            </FormGroup>
-          </Form>
-        </div>
-      );
-    }
-    else {
+      return <PerformanceEditor 
+              info={this.state.info}
+              handleClose={() => this.performanceEditorClose()}
+             >
+             </PerformanceEditor>
+    } else {
       return <div className="no-new" />;
     }
   }
