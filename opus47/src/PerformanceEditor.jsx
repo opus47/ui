@@ -47,7 +47,11 @@ class PerformanceEditor extends Component {
       title: this.state.title,
       description: this.state.description,
       date: this.state.date,
-      performers: this.state.performers
+      performers: this.state.performers.map(x => ({
+        id: "",
+        musician: x,
+        part: "" //TODO
+      }))
     };
 
     console.log(data);
@@ -70,14 +74,11 @@ class PerformanceEditor extends Component {
 
       var recording_data = new FormData();
       recording_data.append('performance', this.state.title);
-      recording_data.append('movement', i+1);
+      recording_data.append('movement', Number(i)+1);
       recording_data.append('file', this.state.files[i]);
 
       fetch('https://opus47.io/recordings', {
         method: 'PUT',
-        /*headers: {
-          'Content-Type': 'multipart/form-data'
-        },*/
         body: recording_data
       })
       .then(x => x.json())
